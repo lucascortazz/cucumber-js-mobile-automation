@@ -4,8 +4,11 @@ node_modules/
 # Environment variables
 .env
 
-# App folder (contains sensitive files)
-app/
+# App files (keep folder structure, ignore binary files)
+app/*.ipa
+app/*.apk
+app/*.aab
+app/*.app
 
 # IDE files
 .vscode/
