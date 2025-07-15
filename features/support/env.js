@@ -11,7 +11,7 @@ class CustomWorld {
     const optimizedCaps = {
       ...caps,
       'browserstack.idleTimeout': 60,  // Session idle timeout (60s)
-      'browserstack.networkProfile': 'no-media',  // Faster network profile
+      'browserstack.networkProfile': '4g-lte-good',  // Better network profile
       'browserstack.appiumVersion': '1.22.0',  // Stable Appium version
       'newCommandTimeout': 60,  // Appium command timeout (60s)
       'commandTimeout': 60000,  // WebDriver command timeout (60s)
