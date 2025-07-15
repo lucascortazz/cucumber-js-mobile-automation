@@ -1,109 +1,188 @@
-📱 Cucumber Mobile Automation Framework (iOS & Android)
-Welcome to the Mobile Automation Framework built with Cucumber, Appium, and Java for cross-platform testing on both iOS and Android devices.
+# 🚀 Cucumber.js Mobile Automation with Smart English Parser
 
-This framework enables BDD-style automation, making test scenarios readable and maintainable across platforms.
+A powerful mobile automation testing framework using Cucumber.js, Appium, and BrowserStack with intelligent English language command parsing.
 
-📋 Project Structure
-bash
-Copy
-Edit
-.
-├── src
-│   ├── main
-│   │    └── java
-│   └── test
-│        ├── java
-│        └── resources
-├── features               # Gherkin feature files
-├── stepdefinitions        # Step definitions (glue code)
-├── drivers                # Driver setup for iOS and Android
-├── configs                # Platform-specific config files
-├── utils                  # Utility and helper classes
-└── pom.xml                # Maven project config
-✅ Prerequisites
-Before running tests, ensure you have the following installed:
+## ✨ Features
 
-Tool	Purpose
-Java (JDK 11 or above)	Project execution
-Maven	Build & dependency mgmt
-Appium Server	Mobile automation backend
-Node.js + NPM	Required for Appium
-Xcode (for iOS)	iOS build & simulator
-Android Studio (for Android)	Android Emulator & SDK tools
+- 🧠 **Smart English Parser**: Test using natural language commands
+- 📱 **Dynamic Device Selection**: Support for multiple iOS devices and versions
+- ☁️ **BrowserStack Integration**: Cloud-based mobile testing
+- 🥒 **Cucumber BDD**: Behavior-driven development with Gherkin syntax
+- 🔄 **Multi-device Testing**: Run tests across different devices sequentially
 
-⚙️ Configuration
-1. Android Setup
-Device Options: Emulator or physical device (USB debugging enabled)
+## 🛠️ Setup
 
-Android Config file:
-Located at:
+### Prerequisites
+- Node.js (v16 or higher)
+- BrowserStack account with valid credentials
 
-arduino
-Copy
-Edit
-/configs/android-config.properties
-Example Config:
+### Installation
+```bash
+# Clone the repository
+git clone <repository-url>
+cd cucumber-js-mobile-automation
 
-ini
-Copy
-Edit
-platformName=Android
-platformVersion=11.0
-deviceName=Pixel_3a_API_30
-appPath=/path/to/app.apk
-automationName=UiAutomator2
-2. iOS Setup
-Device Options: Simulator or real device (requires signing configs for real devices)
+# Install dependencies
+npm install
 
-iOS Config file:
-Located at:
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your BrowserStack credentials
+```
 
-arduino
-Copy
-Edit
-/configs/ios-config.properties
-Example Config:
+### Environment Configuration
+Create a `.env` file with your BrowserStack credentials:
+```
+BROWSERSTACK_USERNAME=your_username
+BROWSERSTACK_ACCESS_KEY=your_access_key
+```
 
-ini
-Copy
-Edit
-platformName=iOS
-platformVersion=15.2
-deviceName=iPhone 12
-appPath=/path/to/app.app
-automationName=XCUITest
-🚀 Running Tests
-Android Example:
-bash
-Copy
-Edit
-mvn clean test -Dplatform=android
-iOS Example:
-bash
-Copy
-Edit
-mvn clean test -Dplatform=ios
-The platform parameter dynamically loads the right driver and configuration for the target OS.
+## 🎯 Usage
 
-🧪 Sample Cucumber Command (Optional)
-bash
-Copy
-Edit
-mvn test -Dcucumber.filter.tags="@smoke" -Dplatform=android
-You can filter by tags like @smoke, @regression, etc.
+### Smart English Parser (Recommended)
+```bash
+# Single device
+node smart-parser.js "Test on iPhone 14 Pro with iOS 16"
 
-📂 Reporting
-After test execution, a Cucumber HTML Report will be generated automatically.
+# Multiple devices
+node smart-parser.js "iPhone 12 with iOS 14, iPhone 13 iOS 16"
 
-Report Path:
+# Complex requests
+node smart-parser.js "Please execute this test case on iPhone 14 Pro device with iOS 16 version"
+```
 
-bash
-Copy
-Edit
-/target/cucumber-reports
-💡 Additional Notes
-Supports both local execution and remote (cloud device farm) runs.
+### Manual Execution
+```bash
+# Environment variables
+DEVICE="iPhone 13" OS_VERSION="16" PLATFORM="iOS" npm test
 
-Easily extendable for parallel execution and CI/CD pipeline integration.
+# Default test
+npm test
+```
 
-For real devices, ensure Appium server and device settings are correctly configured.
+### Quick Validation
+```bash
+# Test parser without running actual tests
+node test-parser.js "iPhone 12 iOS 14, iPhone 13 iOS 16"
+```
+
+## 📱 Supported Devices
+
+### iOS Devices
+- iPhone 14 Pro Max, iPhone 14 Pro, iPhone 14 Plus, iPhone 14
+- iPhone 13 Pro Max, iPhone 13 Pro, iPhone 13 mini, iPhone 13
+- iPhone 12 Pro Max, iPhone 12 Pro, iPhone 12 mini, iPhone 12
+- iPhone 11 Pro Max, iPhone 11 Pro, iPhone 11
+- iPhone SE 2022, iPhone XS Max, iPhone XS, iPhone XR, iPhone X
+- iPhone 8 Plus, iPhone 8
+
+### OS Versions
+- iOS: 16, 15, 14, 13, 12
+
+### Default Values
+- Device: iPhone 14
+- OS Version: 16
+- Platform: iOS
+
+## 🗂️ Project Structure
+
+```
+cucumber-js-mobile-automation/
+├── features/
+│   ├── demoApp.feature          # Main test scenarios
+│   ├── step_definitions/
+│   │   └── demoApp.js          # Step implementations
+│   └── support/
+│       └── env.js              # Test environment setup
+├── smart-parser.js             # Smart English language parser
+├── test-parser.js              # Parser validation tool
+├── cucumber.js                 # Cucumber configuration
+├── package.json                # Dependencies and scripts
+├── .env                        # Environment variables
+└── README.md                   # This file
+```
+
+## 🧪 Test Scenarios
+
+The framework includes comprehensive test scenarios for:
+- ✅ App launch and initialization
+- ✅ Home screen verification
+- ✅ Web View navigation
+- ✅ App termination and cleanup
+
+## 🔧 Configuration
+
+### Cucumber Configuration (`cucumber.js`)
+```javascript
+module.exports = {
+  default: `--format-options '{"snippetInterface": "async-await"}'`
+}
+```
+
+### Package Scripts
+```json
+{
+  "test": "cucumber-js",
+  "test:device": "cucumber-js",
+  "test:ios": "PLATFORM=iOS cucumber-js",
+  "test:smart": "node smart-parser.js"
+}
+```
+
+## 📖 Natural Language Examples
+
+The smart parser understands various natural language patterns:
+
+```bash
+# Simple
+"iPhone 14 Pro iOS 16"
+
+# Descriptive
+"Please test on iPhone 12 with iOS 14"
+
+# Multiple devices
+"Run tests on iPhone 13 iOS 16, iPhone 12 iOS 14"
+
+# Mixed format
+"Test iPhone 14 Pro Max with iOS 16 and iPhone 13"
+```
+
+## 🚦 Running Tests
+
+1. **Parse and validate your request:**
+   ```bash
+   node test-parser.js "iPhone 12 iOS 14, iPhone 13 iOS 16"
+   ```
+
+2. **Execute tests with smart parser:**
+   ```bash
+   node smart-parser.js "iPhone 12 iOS 14, iPhone 13 iOS 16"
+   ```
+
+3. **Manual execution:**
+   ```bash
+   DEVICE="iPhone 12" OS_VERSION="14" npm test
+   ```
+
+## 🔮 Future Enhancements
+
+- 🤖 **Android Support**: Requires custom APK upload to BrowserStack
+- 📊 **Reporting**: Enhanced test reporting and analytics
+- 🔧 **CI/CD Integration**: GitHub Actions/Jenkins pipeline support
+- 🎯 **Parallel Execution**: Concurrent device testing
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License.
+
+---
+
+Built with ❤️ using Cucumber.js, Appium, and BrowserStack
