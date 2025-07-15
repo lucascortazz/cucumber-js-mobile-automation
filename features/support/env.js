@@ -13,6 +13,9 @@ class CustomWorld {
       'browserstack.idleTimeout': 60,  // Session idle timeout (60s)
       'browserstack.networkProfile': '4g-lte-good',  // Better network profile
       'browserstack.appiumVersion': '1.22.0',  // Stable Appium version
+      'browserstack.interactiveDebugging': true,  // Enable interactive debugging
+      'browserstack.debug': true,  // Enable debug logs
+      'browserstack.console': 'errors',  // Show console errors
       'newCommandTimeout': 60,  // Appium command timeout (60s)
       'commandTimeout': 60000,  // WebDriver command timeout (60s)
       'wdaLaunchTimeout': 60000,  // iOS WebDriverAgent timeout
