@@ -1,18 +1,36 @@
 {
-  "name": "ios-cucumber-automation-js",
-  "version": "1.0.0",
+  "name": "super-smart-multilingual-mobile-automation",
+  "version": "3.0.0",
+  "description": "Multilingual mobile automation framework with intelligent app detection (English, Portuguese, Spanish)",
+  "keywords": [
+    "mobile",
+    "automation",
+    "cucumber",
+    "appium",
+    "browserstack",
+    "multilingual",
+    "portuguese",
+    "spanish",
+    "ios",
+    "android"
+  ],
   "scripts": {
     "test": "cucumber-js",
     "test:device": "cucumber-js",
     "test:ios": "PLATFORM=iOS cucumber-js",
     "test:android": "PLATFORM=Android cucumber-js",
-    "test:smart": "node smart-parser.js"
+    "test:calculator": "cucumber-js features/calculator.feature",
+    "test:smart": "node utils/super-smart-parser.js",
+    "test:multilingual": "node utils/multilingual-demo.js",
+    "test:parser": "node utils/test-super-smart-parser.js",
+    "upload:apk": "node utils/upload-apk-to-browserstack.js"
   },
   "dependencies": {
     "@cucumber/cucumber": "^9.0.0",
     "appium": "^2.0.0",
     "appium-uiautomator2-driver": "^2.0.0",
     "dotenv": "^17.2.0",
+    "form-data": "^4.0.3",
     "webdriverio": "^8.0.0"
   },
   "devDependencies": {

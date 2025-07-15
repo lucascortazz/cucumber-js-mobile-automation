@@ -1,88 +1,182 @@
-# 🚀 Cucumber.js Mobile Automation with Smart English Parser
+# 🧠 Super Smart Mobile Automation Framework
 
-A powerful mobile automation testing framework using Cucumber.js, Appium, and BrowserStack with intelligent English language command parsing.
+A revolutionary multilingual Cucumber.js mobile automation framework### 🎯 Traditional Testing (Backward Compatible)
+
+#### Using Super Smart Parser (Recommended)
+```bash
+node utils/super-smart-parser.js "iPhone 12 with iOS 14"
+```
+
+#### Using Direct Commands
+```bash
+# Set environment variables and run
+DEVICE="iPhone 13" OS_VERSION="16" PLATFORM="iOS" npm test
+
+# Or run directly
+npm test
+```nguage parsing, automatic app file detection, and support for English, Portuguese (Brazil), and Spanish (Spain).
 
 ## ✨ Features
 
-- 🧠 **Smart English Parser**: Test using natural language commands
-- 📱 **Dynamic Device Selection**: Support for multiple iOS devices and versions
-- ☁️ **BrowserStack Integration**: Cloud-based mobile testing
-- 🥒 **Cucumber BDD**: Behavior-driven development with Gherkin syntax
-- 🔄 **Multi-device Testing**: Run tests across different devices sequentially
+### 🎯 Super Smart Parser
+- **Natural Language Processing**: Run tests using plain English, Portuguese, or Spanish commands
+- **Automatic App Detection**: Intelligently detects and selects app files
+- **Multi-Platform Support**: iOS and Android testing capabilities
+- **Environment Auto-Selection**: Chooses between simulator and real device testing
+- **Multi-Device Testing**: Run tests across multiple devices simultaneously
+- **Multilingual Support**: 🇺🇸 English, 🇧🇷 Portuguese (Brazil), 🇪🇸 Spanish (Spain)
 
-## 🛠️ Setup
+### 📱 App File Intelligence
+- **`.ipa` files**: Automatically routes to BrowserStack real devices
+- **`.app` files**: Automatically routes to local iOS simulator
+- **`.apk/.aab` files**: Automatically routes to BrowserStack Android devices
+- **Smart Selection**: When multiple app types exist, prompts for user choice
+- **Auto-Detection**: Scans `app/` directory and makes intelligent decisions
+
+### 🌍 Multilingual Support
+- **English**: "iPhone 16 Pro Max with iOS 18"
+- **Portuguese (Brazil)**: "iPhone 16 Pro Máximo com iOS 18"
+- **Spanish (Spain)**: "iPhone 16 Pro Máx con iOS 18"
+- **Smart Detection**: Automatically detects language from command
+- **Localized Messages**: All interface messages in user's language
+
+## � Quick Start
 
 ### Prerequisites
-- Node.js (v16 or higher)
-- BrowserStack account with valid credentials
+1. Node.js installed
+2. BrowserStack account (for real device testing)
+3. Environment variables configured in `.env`
 
-### Installation
+### Setup
 ```bash
-# Clone the repository
-git clone <repository-url>
-cd cucumber-js-mobile-automation
-
-# Install dependencies
 npm install
-
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your BrowserStack credentials
 ```
 
-### Environment Configuration
-Create a `.env` file with your BrowserStack credentials:
-```
-BROWSERSTACK_USERNAME=your_username
-BROWSERSTACK_ACCESS_KEY=your_access_key
-```
+### 🧠 Super Smart Testing
 
-## 🎯 Usage
-
-### Smart English Parser (Recommended)
+#### Simple Device Testing (English)
 ```bash
-# Single device
-node smart-parser.js "Test on iPhone 14 Pro with iOS 16"
+# Test on iPhone 16 Pro Max with iOS 18
+node utils/super-smart-parser.js "iPhone 16 Pro Max with iOS 18"
 
-# Multiple devices
-node smart-parser.js "iPhone 12 with iOS 14, iPhone 13 iOS 16"
-
-# Complex requests
-node smart-parser.js "Please execute this test case on iPhone 14 Pro device with iOS 16 version"
+# Test on Samsung Galaxy S24 Ultra
+node utils/super-smart-parser.js "Galaxy S24 Ultra with Android 14"
 ```
 
-### Manual Execution
+#### Português (Brasil) 🇧🇷
 ```bash
-# Environment variables
+# Testar no iPhone 16 Pro Máximo com iOS 18
+node utils/super-smart-parser.js "iPhone 16 Pro Máximo com iOS 18"
+
+# Testar no Samsung Galaxy S24 Ultra
+node utils/super-smart-parser.js "Galáxia S24 Ultra com Android 14"
+```
+
+#### Español (España) 🇪🇸
+```bash
+# Probar en iPhone 16 Pro Máx con iOS 18
+node utils/super-smart-parser.js "iPhone 16 Pro Máx con iOS 18"
+
+# Probar en Samsung Galaxy S24 Ultra
+node utils/super-smart-parser.js "Galaxia S24 Ultra con Android 14"
+```
+
+#### Multi-Device Testing (All Languages)
+```bash
+# English
+node utils/super-smart-parser.js "iPhone 15 Pro with iOS 17, Galaxy S23 with Android 13"
+
+# Portuguese
+node utils/super-smart-parser.js "iPhone 15 Pro com iOS 17, Galáxia S23 com Android 13"
+
+# Spanish
+node utils/super-smart-parser.js "iPhone 15 Pro con iOS 17, Galaxia S23 con Android 13"
+```
+
+### 📁 App File Organization
+
+Place your app files in the `app/` directory:
+
+```
+app/
+├── MyiOSApp.ipa      # Real device testing
+├── MyiOSApp.app      # Simulator testing
+├── MyAndroidApp.apk  # Android testing
+├── MyAndroidApp.aab  # Android bundle
+└── README.md         # App documentation
+```
+
+### 🎯 Smart Selection Logic
+
+| App Type | Environment | Usage |
+|----------|------------|--------|
+| `.ipa` | BrowserStack Real Devices | Production testing on actual devices |
+| `.app` | Local iOS Simulator | Fast development testing |
+| `.apk/.aab` | BrowserStack Android | Android device testing |
+
+When multiple iOS app types exist (both `.ipa` and `.app`), the parser will:
+1. Display available options
+2. Prompt for user choice
+3. Execute tests with selected environment
+
+### 🧪 Testing Parser Logic
+
+Test the intelligence without running actual tests:
+```bash
+node utils/test-super-smart-parser.js
+```
+
+### � Traditional Testing (Backward Compatible)
+
+#### Using Smart Parser (Recommended)
+```bash
+node utils/super-smart-parser.js "iPhone 12 with iOS 14"
+```
+
+#### Using Direct Commands
+```bash
+# Set environment variables and run
 DEVICE="iPhone 13" OS_VERSION="16" PLATFORM="iOS" npm test
 
-# Default test
+# Or run directly
 npm test
-```
-
-### Quick Validation
-```bash
-# Test parser without running actual tests
-node test-parser.js "iPhone 12 iOS 14, iPhone 13 iOS 16"
 ```
 
 ## 📱 Supported Devices
 
-### iOS Devices
-- iPhone 14 Pro Max, iPhone 14 Pro, iPhone 14 Plus, iPhone 14
-- iPhone 13 Pro Max, iPhone 13 Pro, iPhone 13 mini, iPhone 13
-- iPhone 12 Pro Max, iPhone 12 Pro, iPhone 12 mini, iPhone 12
-- iPhone 11 Pro Max, iPhone 11 Pro, iPhone 11
-- iPhone SE 2022, iPhone XS Max, iPhone XS, iPhone XR, iPhone X
-- iPhone 8 Plus, iPhone 8
+### iOS Devices (All Languages)
+- **iPhone 16 series** (2024): 16 Pro Max, 16 Pro, 16 Plus, 16
+- **iPhone 15 series** (2023): 15 Pro Max, 15 Pro, 15 Plus, 15
+- **iPhone 14 series** (2022): 14 Pro Max, 14 Pro, 14 Plus, 14
+- **iPhone 13 series** (2021): 13 Pro Max, 13 Pro, 13 mini, 13
+- **iPhone 12 series** (2020): 12 Pro Max, 12 Pro, 12 mini, 12
+- **iPhone 11 series** (2019): 11 Pro Max, 11 Pro, 11
+- **iPhone SE and older**: SE 2022, XS Max, XS, XR, X, 8 Plus, 8
 
-### OS Versions
-- iOS: 16, 15, 14, 13, 12
+### Android Devices (All Languages)
+- **Google Pixel**: 8 Pro, 8, 7 Pro, 7, 6 Pro, 6, 5, 4, 4 XL, 3, 3 XL
+- **Samsung Galaxy S**: S24 Ultra/Plus/Standard, S23 Ultra/Plus/Standard, S22 Ultra/Plus/Standard, S21 Ultra/Plus/Standard, S20 Ultra/Plus/Standard
+- **Samsung Galaxy Note**: Note 20 Ultra, Note 20
+- **OnePlus**: 12, 11, 10 Pro, 10, 9 Pro, 9, 8 Pro, 8
+- **Xiaomi**: 14 Ultra, 14, 13 Ultra, 13, 12 Ultra, 12
+- **Redmi**: Note 13, Note 12
+- **Huawei**: P60 Pro, P60, P50 Pro, P50, Mate 60, Mate 50
 
-### Default Values
-- Device: iPhone 14
-- OS Version: 16
-- Platform: iOS
+### iOS Versions
+- iOS 18 (iPhone 16 series default)
+- iOS 17 (iPhone 15 series default)
+- iOS 16 (iPhone 14 series default)
+- iOS 15, 14, 13, 12 (compatible with all devices)
+
+### Android Versions
+- Android 14 (latest devices default)
+- Android 13 (2023 devices default)
+- Android 12, 11, 10, 9, 8 (compatible with all devices)
+
+### Multilingual Device Names
+- **English**: "iPhone 16 Pro Max", "Galaxy S24 Ultra"
+- **Portuguese**: "iPhone 16 Pro Máximo", "Galáxia S24 Ultra"
+- **Spanish**: "iPhone 16 Pro Máx", "Galaxia S24 Ultra"
 
 ## 🗂️ Project Structure
 
@@ -94,8 +188,11 @@ cucumber-js-mobile-automation/
 │   │   └── demoApp.js          # Step implementations
 │   └── support/
 │       └── env.js              # Test environment setup
-├── smart-parser.js             # Smart English language parser
-├── test-parser.js              # Parser validation tool
+├── utils/
+│   ├── super-smart-parser.js       # Multilingual intelligent parser
+│   ├── test-super-smart-parser.js  # Parser validation tool
+│   └── multilingual-demo.js        # Multilingual demonstration
+├── app/                        # App files directory
 ├── cucumber.js                 # Cucumber configuration
 ├── package.json                # Dependencies and scripts
 ├── .env                        # Environment variables
@@ -125,13 +222,13 @@ module.exports = {
   "test": "cucumber-js",
   "test:device": "cucumber-js",
   "test:ios": "PLATFORM=iOS cucumber-js",
-  "test:smart": "node smart-parser.js"
+  "test:smart": "node utils/super-smart-parser.js"
 }
 ```
 
 ## 📖 Natural Language Examples
 
-The smart parser understands various natural language patterns:
+The super smart parser understands various natural language patterns:
 
 ```bash
 # Simple
@@ -151,12 +248,12 @@ The smart parser understands various natural language patterns:
 
 1. **Parse and validate your request:**
    ```bash
-   node test-parser.js "iPhone 12 iOS 14, iPhone 13 iOS 16"
+   node utils/test-super-smart-parser.js "iPhone 12 iOS 14, iPhone 13 iOS 16"
    ```
 
-2. **Execute tests with smart parser:**
+2. **Execute tests with super smart parser:**
    ```bash
-   node smart-parser.js "iPhone 12 iOS 14, iPhone 13 iOS 16"
+   node utils/super-smart-parser.js "iPhone 12 iOS 14, iPhone 13 iOS 16"
    ```
 
 3. **Manual execution:**

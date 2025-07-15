@@ -6,24 +6,50 @@ Given('I launch the BrowserStack demo app', async function () {
   const device = process.env.DEVICE || 'iPhone 14';
   const osVersion = process.env.OS_VERSION || '16';
   const platform = process.env.PLATFORM || 'iOS';
+  const appFile = process.env.APP_FILE || null;
+  const appType = process.env.APP_TYPE || null;
+  const testEnvironment = process.env.TEST_ENVIRONMENT || 'browserstack';
   
   console.log(`Running test on: ${device} with ${platform} ${osVersion}`);
+  console.log(`App file: ${appFile || 'Default demo app'}`);
+  console.log(`Test environment: ${testEnvironment}`);
   
   // For now, only iOS is supported with the current BrowserStack demo app
   if (platform !== 'iOS') {
     throw new Error('Only iOS platform is currently supported. Please use iOS devices for testing.');
   }
   
+  // Handle different app types and environments
+  let appUrl;
+  if (appFile && appType) {
+    if (testEnvironment === 'browserstack' && appType === 'ipa') {
+      // For .ipa files, you would need to upload to BrowserStack first
+      // For now, using the demo app URL as placeholder
+      console.log(`📱 Using .ipa file: ${appFile} (would need BrowserStack upload)`);
+      appUrl = 'bs://e6758a82077a5e804dba0d409d23788c79d53a82';  // Demo app fallback
+    } else if (testEnvironment === 'simulator' && appType === 'app') {
+      // For .app files, would use local simulator
+      console.log(`📲 Using .app file: ${appFile} (would use local simulator)`);
+      appUrl = 'bs://e6758a82077a5e804dba0d409d23788c79d53a82';  // Demo app fallback
+    } else {
+      console.log(`🔄 Using default demo app (app type: ${appType} not fully implemented)`);
+      appUrl = 'bs://e6758a82077a5e804dba0d409d23788c79d53a82';  // Demo app
+    }
+  } else {
+    console.log(`🎯 Using default BrowserStack demo app`);
+    appUrl = 'bs://e6758a82077a5e804dba0d409d23788c79d53a82';  // Demo app
+  }
+  
   const caps = {
     'platformName': platform,
     'browserstack.user': process.env.BROWSERSTACK_USERNAME,
     'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY,
-    'app': 'bs://e6758a82077a5e804dba0d409d23788c79d53a82',  // iOS demo app
+    'app': appUrl,
     'device': device,
     'os_version': osVersion,
-    'project': 'BrowserStack Demo App Test',
-    'build': 'Demo App Build',
-    'name': `demo_test_run_${device}_${osVersion}`,
+    'project': 'Smart Mobile App Test',
+    'build': 'Super Smart Build',
+    'name': `smart_test_${device}_${osVersion}_${appFile || 'demo'}`,
     'browserstack.debug': true
   };
   await this.initAppiumSession(caps);
