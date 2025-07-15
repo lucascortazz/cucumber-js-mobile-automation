@@ -30,3 +30,27 @@ screenshots/
 # Temporary files
 *.tmp
 *.temp
+
+# Debug and development files
+*-debug.js
+*-test.js
+*-dev.js
+debug-*.js
+test-*.js
+dump-*.js
+inspect-*.js
+CALCULATOR_TESTING.md
+DEVICE_TESTING.md
+FINAL-SUMMARY.js
+SMART_PARSER_GUIDE.md
+batch-test.js
+demo-success.js
+run-test.js
+smart-parser.js
+prompt-parser.js
+test-device.sh
+
+# Exclude duplicate utilities in root (keep only in utils/)
+/multilingual-demo.js
+/super-smart-parser.js
+/test-super-smart-parser.js
