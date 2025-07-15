@@ -63,14 +63,13 @@ Given('I launch the calculator app', async function () {
 When('I tap on number {string}', async function (number) {
   console.log(`📱 Tapping on number: ${number}`);
   
-  // Try multiple locator strategies to find the number button
+  // ⚡ Optimized locator strategies - try most likely ones first
   const locatorStrategies = [
-    `android=new UiSelector().resourceId("com.calculator.apk:id/btn_${number}")`,
-    `android=new UiSelector().text("${number}")`,
-    `//android.widget.Button[@text="${number}"]`,
-    `//android.widget.Button[@content-desc="${number}"]`,
-    `~${number}`,
-    `[text="${number}"]`
+    `android=new UiSelector().text("${number}")`,  // Most common
+    `//android.widget.Button[@text="${number}"]`,  // Standard XPath
+    `android=new UiSelector().resourceId("com.calculator.apk:id/btn_${number}")`,  // Resource ID
+    `~${number}`,  // Accessibility ID
+    `//android.widget.Button[@content-desc="${number}"]`,  // Content description
   ];
   
   let element = null;
@@ -80,38 +79,44 @@ When('I tap on number {string}', async function (number) {
     try {
       console.log(`🔍 Trying locator strategy: ${strategy}`);
       element = await this.driver.$(strategy);
-      const isDisplayed = await element.isDisplayed();
+      
+      // ⚡ Use waitForDisplayed with short timeout instead of isDisplayed
+      const isDisplayed = await element.waitForDisplayed({ timeout: 3000, reverse: false });
       if (isDisplayed) {
         usedStrategy = strategy;
         break;
       }
     } catch (error) {
-      console.log(`❌ Strategy failed: ${strategy}`);
+      console.log(`❌ Strategy failed: ${strategy} - ${error.message}`);
       continue;
     }
   }
   
-  if (!element || !(await element.isDisplayed())) {
+  if (!element) {
     throw new Error(`Could not find number button ${number} using any locator strategy`);
   }
   
   console.log(`✅ Found number ${number} using strategy: ${usedStrategy}`);
+  
+  // ⚡ Wait for element to be clickable before clicking
+  await element.waitForClickable({ timeout: 5000 });
   await element.click();
+  
   console.log(`✅ Number ${number} tapped successfully`);
 });
 
 When('I tap on the {string} button', async function (operation) {
   console.log(`🔢 Tapping on operation: ${operation}`);
   
-  // Map operations to potential button IDs and texts based on decompiled strings.xml
+  // ⚡ Optimized operation mapping - most common patterns first
   const operationMap = {
-    '+': ['plus', 'add', '+', 'btn_plus', 'btn_add', 'ADD', 'PLUS'],
-    '-': ['minus', 'subtract', '-', '−', 'btn_minus', 'btn_subtract', 'MINUS', 'SUBTRACT'],
-    '*': ['multiply', 'times', '*', '×', 'btn_multiply', 'btn_times', 'MULTIPLY', 'TIMES'],
-    '/': ['divide', 'division', '÷', '/', 'btn_divide', 'btn_div', 'DIVIDE', 'DIV', 'DIVISION'],
-    '=': ['equals', 'equal', '=', 'btn_equals', 'btn_equal', 'EQUALS', 'EQUAL'],
-    'C': ['clear', 'C', 'btn_clear', 'btn_c', 'btn_clr', 'CLEAR'],
-    'AC': ['all_clear', 'AC', 'btn_all_clear', 'btn_ac', 'ALL_CLEAR']
+    '+': ['+', 'plus', 'ADD', 'btn_plus', 'add'],
+    '-': ['-', '−', 'minus', 'MINUS', 'btn_minus', 'subtract'],
+    '*': ['*', '×', 'multiply', 'MULTIPLY', 'btn_multiply', 'times'],
+    '/': ['/', '÷', 'divide', 'DIVIDE', 'btn_divide', 'division'],
+    '=': ['=', 'equals', 'EQUALS', 'btn_equals', 'equal'],
+    'C': ['C', 'clear', 'CLEAR', 'btn_clear', 'btn_c'],
+    'AC': ['AC', 'all_clear', 'ALL_CLEAR', 'btn_all_clear', 'btn_ac']
   };
   
   const buttonVariants = operationMap[operation] || [operation];
@@ -119,20 +124,22 @@ When('I tap on the {string} button', async function (operation) {
   let usedStrategy = '';
   
   for (const variant of buttonVariants) {
+    // ⚡ Prioritized locator strategies - most reliable first
     const locatorStrategies = [
-      `android=new UiSelector().resourceId("com.calculator.apk:id/${variant}")`,
       `android=new UiSelector().text("${variant}")`,
       `//android.widget.Button[@text="${variant}"]`,
-      `//android.widget.Button[@content-desc="${variant}"]`,
+      `android=new UiSelector().resourceId("com.calculator.apk:id/${variant}")`,
       `~${variant}`,
-      `[text="${variant}"]`
+      `//android.widget.Button[@content-desc="${variant}"]`,
     ];
     
     for (const strategy of locatorStrategies) {
       try {
         console.log(`🔍 Trying locator strategy: ${strategy}`);
         element = await this.driver.$(strategy);
-        const isDisplayed = await element.isDisplayed();
+        
+        // ⚡ Use waitForDisplayed with timeout instead of isDisplayed
+        const isDisplayed = await element.waitForDisplayed({ timeout: 3000, reverse: false });
         if (isDisplayed) {
           usedStrategy = strategy;
           break;
@@ -142,31 +149,34 @@ When('I tap on the {string} button', async function (operation) {
       }
     }
     
-    if (element && await element.isDisplayed()) {
+    if (element) {
       break;
     }
   }
   
-  if (!element || !(await element.isDisplayed())) {
+  if (!element) {
     throw new Error(`Could not find operation button ${operation} using any locator strategy`);
   }
   
   console.log(`✅ Found operation ${operation} using strategy: ${usedStrategy}`);
+  
+  // ⚡ Wait for element to be clickable before clicking
+  await element.waitForClickable({ timeout: 5000 });
   await element.click();
+  
   console.log(`✅ Operation ${operation} tapped successfully`);
 });
 
 Then('I should see the result {string}', async function (expectedResult) {
   console.log(`🔍 Verifying result: ${expectedResult}`);
   
-  // Try multiple locator strategies to find the display
+  // ⚡ Optimized display locator strategies - most common first
   const displayLocatorStrategies = [
     `android=new UiSelector().resourceId("com.calculator.apk:id/display")`,
-    `android=new UiSelector().className("android.widget.TextView")`,
     `//android.widget.TextView[@resource-id="com.calculator.apk:id/display"]`,
+    `android=new UiSelector().className("android.widget.TextView")`,
     `//android.widget.TextView`,
     `android=new UiSelector().text("${expectedResult}")`,
-    `[text="${expectedResult}"]`
   ];
   
   let displayElement = null;
@@ -176,7 +186,9 @@ Then('I should see the result {string}', async function (expectedResult) {
     try {
       console.log(`🔍 Trying display locator strategy: ${strategy}`);
       displayElement = await this.driver.$(strategy);
-      const isDisplayed = await displayElement.isDisplayed();
+      
+      // ⚡ Use waitForDisplayed with timeout instead of isDisplayed
+      const isDisplayed = await displayElement.waitForDisplayed({ timeout: 5000, reverse: false });
       if (isDisplayed) {
         usedStrategy = strategy;
         break;
@@ -186,11 +198,14 @@ Then('I should see the result {string}', async function (expectedResult) {
     }
   }
   
-  if (!displayElement || !(await displayElement.isDisplayed())) {
+  if (!displayElement) {
     throw new Error(`Could not find calculator display using any locator strategy`);
   }
   
   console.log(`✅ Found display using strategy: ${usedStrategy}`);
+  
+  // ⚡ Wait for element to have text before getting it
+  await displayElement.waitForDisplayed({ timeout: 5000 });
   
   // Get the actual text from the display
   const actualResult = await displayElement.getText();
@@ -292,45 +307,24 @@ Then('I should see the calculator app interface', async function () {
   console.log(`✅ Calculator app interface verified (${foundElements} elements found)`);
 });
 
-// Session cleanup
+// ⚡ Optimized session cleanup
 const { After } = require('@cucumber/cucumber');
 
 After(async function () {
   if (this.driver) {
     console.log('🔄 Cleaning up WebDriver session...');
-    await this.driver.deleteSession();
-    console.log('✅ WebDriver session cleaned up');
+    try {
+      await this.driver.deleteSession();
+      console.log('✅ WebDriver session cleaned up');
+    } catch (error) {
+      console.log('⚠️ Session cleanup warning:', error.message);
+    }
   }
 });
 
-// Additional helper step for debugging
+// Helper step for debugging
 When('I wait for {int} seconds', async function (seconds) {
   console.log(`⏳ Waiting for ${seconds} seconds...`);
   await new Promise(resolve => setTimeout(resolve, seconds * 1000));
   console.log(`✅ Wait completed`);
-});
-
-Then('I should see the calculator app interface', async function () {
-  console.log(`🔍 Verifying calculator app interface`);
-  
-  // Common Android calculator app interface elements
-  const interfaceElements = {
-    display: {
-      id: 'com.calculator.apk:id/display',
-      xpath: '//android.widget.TextView[@resource-id="com.calculator.apk:id/display"]'
-    },
-    numberPad: {
-      xpath: '//android.widget.Button[@text="0" or @text="1" or @text="2" or @text="3" or @text="4" or @text="5" or @text="6" or @text="7" or @text="8" or @text="9"]'
-    },
-    operationButtons: {
-      xpath: '//android.widget.Button[@text="+" or @text="-" or @text="*" or @text="/" or @text="="]'
-    }
-  };
-  
-  console.log(`🎯 Interface verification strategies:`);
-  console.log(`   Display: ${interfaceElements.display.id}`);
-  console.log(`   Number pad: ${interfaceElements.numberPad.xpath}`);
-  console.log(`   Operations: ${interfaceElements.operationButtons.xpath}`);
-  
-  console.log(`✅ Calculator app interface verified`);
 });
