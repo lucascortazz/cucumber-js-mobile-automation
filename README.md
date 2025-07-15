@@ -1,20 +1,6 @@
 # 🧠 Super Smart Mobile Automation Framework
 
-A revolutionary multilingual Cucumber.js mobile automation framework### 🎯 Traditional Testing (Backward Compatible)
-
-#### Using Super Smart Parser (Recommended)
-```bash
-node utils/super-smart-parser.js "iPhone 12 with iOS 14"
-```
-
-#### Using Direct Commands
-```bash
-# Set environment variables and run
-DEVICE="iPhone 13" OS_VERSION="16" PLATFORM="iOS" npm test
-
-# Or run directly
-npm test
-```nguage parsing, automatic app file detection, and support for English, Portuguese (Brazil), and Spanish (Spain).
+A revolutionary multilingual Cucumber.js mobile automation framework with intelligent device parsing, automatic app file detection, and support for English, Portuguese (Brazil), and Spanish (Spain).
 
 ## ✨ Features
 
@@ -182,26 +168,37 @@ npm test
 
 ```
 cucumber-js-mobile-automation/
-├── features/
-│   ├── demoApp.feature          # Main test scenarios
-│   ├── step_definitions/
-│   │   └── demoApp.js          # Step implementations
-│   └── support/
-│       └── env.js              # Test environment setup
-├── utils/
-│   ├── super-smart-parser.js       # Multilingual intelligent parser
-│   ├── test-super-smart-parser.js  # Parser validation tool
-│   └── multilingual-demo.js        # Multilingual demonstration
-├── app/                        # App files directory
-├── cucumber.js                 # Cucumber configuration
-├── package.json                # Dependencies and scripts
-├── .env                        # Environment variables
-└── README.md                   # This file
+├── 📁 app/
+│   └── Calculator.apk
+├── 📁 features/
+│   ├── calculator.feature
+│   ├── openReminders.feature
+│   ├── 📁 step_definitions/
+│   │   ├── calculator.js
+│   │   └── openReminders.js
+│   └── 📁 support/
+│       └── env.js
+├── 📁 utils/
+│   ├── multilingual-demo.js
+│   ├── super-smart-parser.js
+│   └── upload-apk-to-browserstack.js
+├── cucumber.js
+├── package.json
+└── README.md
 ```
 
 ## 🧪 Test Scenarios
 
 The framework includes comprehensive test scenarios for:
+
+### Calculator App Testing
+- **Basic Calculations**: Addition, subtraction, multiplication, division
+- **UI Interactions**: Button clicks, display verification
+- **Cross-Platform**: iOS device testing via BrowserStack
+
+### Reminder App Testing
+- **App Launch**: Opening the Reminders app
+- **Navigation**: Basic app navigation patterns
 - ✅ App launch and initialization
 - ✅ Home screen verification
 - ✅ Web View navigation
@@ -222,7 +219,11 @@ module.exports = {
   "test": "cucumber-js",
   "test:device": "cucumber-js",
   "test:ios": "PLATFORM=iOS cucumber-js",
-  "test:smart": "node utils/super-smart-parser.js"
+  "test:android": "PLATFORM=Android cucumber-js",
+  "test:calculator": "cucumber-js features/calculator.feature",
+  "test:smart": "node utils/super-smart-parser.js",
+  "test:multilingual": "node utils/multilingual-demo.js",
+  "upload:apk": "node utils/upload-apk-to-browserstack.js"
 }
 ```
 
@@ -246,19 +247,19 @@ The super smart parser understands various natural language patterns:
 
 ## 🚦 Running Tests
 
-1. **Parse and validate your request:**
+1. **Execute calculator tests:**
    ```bash
-   node utils/test-super-smart-parser.js "iPhone 12 iOS 14, iPhone 13 iOS 16"
+   npm test
    ```
 
-2. **Execute tests with super smart parser:**
-   ```bash
-   node utils/super-smart-parser.js "iPhone 12 iOS 14, iPhone 13 iOS 16"
-   ```
-
-3. **Manual execution:**
+2. **Run with specific device configuration:**
    ```bash
    DEVICE="iPhone 12" OS_VERSION="14" npm test
+   ```
+
+3. **Run multilingual demo:**
+   ```bash
+   node utils/multilingual-demo.js
    ```
 
 ## 🔮 Future Enhancements
